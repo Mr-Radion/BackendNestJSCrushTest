@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
+// помечаем эту функцию провайдером для модуля, поскольку этот сервис мы будем внедрять в контроллер, тоесть делать иньекцию
+// в service как обычно логика, запросы к бд, валидация и т.п. контролеры лишь должны получать какой-то ответ и возвращать, как чистые функции
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getUsers() {
+    return [{ id: 1, name: 'Yana Zachetnaya' }];
   }
 }
