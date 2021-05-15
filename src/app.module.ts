@@ -18,6 +18,22 @@ import { AuthModule } from './auth/auth.module';
   // мы можем импортировать в наш модуль другие. в данном случае само подключение и конфигурация к бд
   imports: [
     // путь до файла конфигурации
+    // ConfigModule.forRoot({
+    //   envFilePath: `.${process.env.NODE_ENV}.env`,
+    // }),
+    // SequelizeModule.forRoot({
+    //   dialect: 'postgres',
+    //   host: process.env.POSTGRES_HOST,
+    //   port: Number(process.env.POSTGRESS_PORT),
+    //   username: process.env.POSTGRES_USER,
+    //   password: process.env.POSTGRESS_PASSWORD,
+    //   database: process.env.POSTGRES_DB,
+    //   // регистрируем в бд модели
+    //   models: [User, Role, UserRoles],
+    //   // флаг чтобы SequelizeModule создавал таблицы в бд, на основании моделей, которые мы будем создавать
+    //   autoLoadModels: true,
+    // }),
+
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
@@ -28,9 +44,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRESS_PASSWORD,
       database: process.env.POSTGRES_DB,
-      // регистрируем в бд модели
       models: [User, Role, UserRoles],
-      // флаг чтобы SequelizeModule создавал таблицы в бд, на основании моделей, которые мы будем создавать
       autoLoadModels: true,
     }),
     UsersModule,

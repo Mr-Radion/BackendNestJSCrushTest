@@ -29,4 +29,10 @@ export class UsersService {
     const users = await this.userRepository.findAll({ include: { all: true } });
     return users;
   }
+
+  // создадим метод, который проверит есть ли в бд пользователь с конкретным email
+  async getUserByEmail(email: string) {
+    const user = await this.userRepository.findOne({ where: { email }, include: { all: true } });
+    return user;
+  }
 }

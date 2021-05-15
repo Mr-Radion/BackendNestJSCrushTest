@@ -13,5 +13,6 @@ import { RolesModule } from 'src/roles/roles.module';
   // в roles.module export поэтому тут можно модуль экспортировать вместе с его конфигурациями,
   // чтобы получить в нашем случае доступ к RoleService
   imports: [SequelizeModule.forFeature([User, Role, UserRoles]), RolesModule],
+  exports: [UsersService],
 })
 export class UsersModule {}
