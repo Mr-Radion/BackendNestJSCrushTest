@@ -33,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
     //   // флаг чтобы SequelizeModule создавал таблицы в бд, на основании моделей, которые мы будем создавать
     //   autoLoadModels: true,
     // }),
-
+    // @nestjs/config - внутри использует dotenv
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),

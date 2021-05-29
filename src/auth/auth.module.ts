@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [AuthService],
   imports: [
     UsersModule,
+    // на jwt.io можно проверить декодировав, все ли передается
     JwtModule.register({
       secret: process.env.PRIVATE_KEY || 'SERCRET',
       signOptions: {

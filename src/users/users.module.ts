@@ -7,6 +7,10 @@ import { Role } from 'src/roles/roles.model';
 import { UserRoles } from 'src/roles/user-roles.model';
 import { RolesModule } from 'src/roles/roles.module';
 
+// то что начинается с @ это декораторы из ts, а внутри используются замыкания и дескрипторы
+// пример имплементации декоратора @Module в dist билде, для понимания что и как работает внизу ссылки
+// про дескрипторы тут https://www.youtube.com/watch?v=z5h-iQSB6Dw
+// с 1 часа 15 мин про декораторы тут https://www.youtube.com/watch?v=7NU6K4170As&list=RDCMUCg8ss4xW9jASrqWGP30jXiw&index=2
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
