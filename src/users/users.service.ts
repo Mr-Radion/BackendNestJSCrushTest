@@ -61,6 +61,10 @@ export class UsersService {
     throw new HttpException('Пользователь или роль не найдены', HttpStatus.NOT_FOUND);
   }
 
+  async editUser(dto: CreateUsersDto) {
+    // const user = await this.userRepository.findByPk(dto.userId);
+  }
+
   async ban(dto: BanUserDto) {
     const user = await this.userRepository.findByPk(dto.userId);
     if (!user) {
@@ -73,5 +77,13 @@ export class UsersService {
     // вызываем функцию .save() тем самым обновляя значение в бд
     await user.save();
     return user;
+  }
+
+  async removeUser() {
+    ('');
+  }
+
+  async removeRoleUser() {
+    ('');
   }
 }
