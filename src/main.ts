@@ -1,12 +1,13 @@
-import { ValidationPipe } from './pipes/validation.pipe';
+// import { ValidationPipe } from './pipes/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 // import { JwtAutGuard } from './auth/jwt-auth.guard';
+import { MyLogger } from './config';
 
 async function start() {
   const PORT = process.env.PORT || 5000;
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: new MyLogger() });
 
   // Builder позволяет задать для объекта, какие-то параметры/поля со своими значениями
   const config = new DocumentBuilder()
