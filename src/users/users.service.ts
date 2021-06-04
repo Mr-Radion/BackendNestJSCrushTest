@@ -1,8 +1,10 @@
 import { RolesService } from './../roles/roles.service';
 import { User } from './users.model';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUsersDto } from './dto/create-users.dto';
+import { AddRoleDto } from './dto/add-role.dto';
+import { BanUserDto } from './dto/ban-user.dto';
 
 // сервисы основной источник бизнес логики, тут валидация, запросы к бд который ссылается из контроллера
 // помечаем эту функцию провайдером для модуля, поскольку этот сервис мы будем внедрять в контроллер, тоесть делать иньекцию
@@ -42,6 +44,34 @@ export class UsersService {
   // создадим метод, который проверит есть ли в бд пользователь с конкретным email
   async getUserByEmail(email: string) {
     const user = await this.userRepository.findOne({ where: { email }, include: { all: true } });
+    return user;
+  }
+
+  async addRole(dto: AddRoleDto) {
+    // сначала получим пользователя findByPk тут Pk - это Primary Key внутренний ключ, что и есть id пользователя
+    const user = await this.userRepository.findByPk(dto.userId);
+    // теперь надо получить роль из бд по уже готовому сервису поиска ролей
+    const role = await this.roleService.getRoleByValue(dto.value);
+    // если пользователь и указанная роль существуют в бд, то делаем эту роль
+    if (role && user) {
+      // делаем с помощью функции $add первым ключом указываем поле, которое хотим добавить, а вторым параметром значение
+      await user.$add('role', role.id);
+      return dto;
+    }
+    throw new HttpException('Пользователь или роль не найдены', HttpStatus.NOT_FOUND);
+  }
+
+  async ban(dto: BanUserDto) {
+    const user = await this.userRepository.findByPk(dto.userId);
+    if (!user) {
+      // если пользователь не был найден, бросим ошибку
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+    // получаем пользователя и перезаписываем его поле ban
+    user.banned = true;
+    user.banReason = dto.banReason; // указываем причину блокировки
+    // вызываем функцию .save() тем самым обновляя значение в бд
+    await user.save();
     return user;
   }
 }

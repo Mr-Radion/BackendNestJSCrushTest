@@ -3,6 +3,9 @@ import { Column, DataType, Model, Table, BelongsToMany } from 'sequelize-typescr
 import { Role } from 'src/roles/roles.model';
 import { UserRoles } from 'src/roles/user-roles.model';
 
+/* ВАЖНО ЕСЛИ НЕ НАПИСАТЬ ЗАРАНЕЕ МИГРАЦИЮ ДЛЯ ТАБЛИЦ, ТО ПОТОМ НЕЛЬЗЯ ИЗМЕНИТЬ В СУЩЕСТВУЮЩЕЙ ТИП ДАННЫХ, ПРИДЕТСЯ УДАЛЯТЬ И ЗАНОВО 
+СОЗДАВАТЬ, ПОЭТОМУ ЕЕ НАДО СОЗДАВАТЬ ЗАРАНЕЕ  */
+
 // тут содержатся поля обязательные для заполнения (пользователем) для класса
 // остальные поля для создани объекта нам не нужны
 interface UserCreationAttrs {

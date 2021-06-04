@@ -14,7 +14,7 @@ export class UserRoles extends Model<UserRoles> {
   id: number;
 
   // чтобы sequelize понимал, что это внешний id ключ, а не внутренний, как обычный id,
-  // помечаем @ForeignKey указывая внутри на что этот ключ ссылается
+  // помечаем @ForeignKey указывая внутри на что внешний ключ ссылается
   @ForeignKey(() => Role)
   @Column({ type: DataType.INTEGER })
   roleId: number;
