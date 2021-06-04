@@ -9,7 +9,7 @@ import { UserRoles } from './user-roles.model';
 @Module({
   providers: [RolesService],
   controllers: [RolesController],
-  // тут добавляем модели, которые используются в таблице roles и связанных с ней таблицах
+  // тут с помощью .forFeature добавляем модели, которые используются в таблице roles и связанных с ней таблицах
   imports: [SequelizeModule.forFeature([Role, User, UserRoles])],
   exports: [RolesService],
 })

@@ -1,6 +1,7 @@
+import { AuthModule } from './../auth/auth.module';
 import { User } from './users.model';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { Role } from 'src/roles/roles.model';
@@ -16,7 +17,9 @@ import { RolesModule } from 'src/roles/roles.module';
   providers: [UsersService],
   // в roles.module export поэтому тут можно модуль экспортировать вместе с его конфигурациями,
   // чтобы получить в нашем случае доступ к RoleService
-  imports: [SequelizeModule.forFeature([User, Role, UserRoles]), RolesModule],
+  imports: [SequelizeModule.forFeature([User, Role, UserRoles]), RolesModule, forwardRef(() => AuthModule)],
+  // когда в ошибке кольцевая зависимость ибо AuthModule используется в usermodule и наоборот usermodule используется в authmodule
+  // чтобы избежать этого оборачиваем модуль в функцию forwardRef(() => AuthModule)
   exports: [UsersService],
 })
 export class UsersModule {}

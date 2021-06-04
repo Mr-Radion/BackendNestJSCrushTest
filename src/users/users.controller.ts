@@ -1,8 +1,9 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { User } from './users.model';
 import { UsersService } from './users.service';
+import { JwtAutGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Пользователи')
 @Controller('users')
@@ -22,6 +23,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Получение всех пользователей' })
   @ApiResponse({ status: 200, type: [User] }) // type: [User] - тут вместо type: User[]
+  // @UseGuards(JwtAutGuard) // защита ендпоинта от неавторизованных пользователей, но можно делать глобально в main.js для всех ендпоинтов
   @Get()
   getAll() {
     return this.userService.getAllUsers();

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
@@ -8,14 +8,17 @@ import { JwtModule } from '@nestjs/jwt';
   controllers: [AuthController],
   providers: [AuthService],
   imports: [
-    UsersModule,
-    // на jwt.io можно проверить декодировав, все ли передается
+    forwardRef(() => UsersModule),
+    // на сайте jwt.io можно проверить декодировав, все ли передается
     JwtModule.register({
       secret: process.env.PRIVATE_KEY || 'SERCRET',
       signOptions: {
         expiresIn: '24h',
       },
     }),
-  ], // secret вместо privateKey, signOptions это время жизни токена
+  ], // signOptions это время жизни access токена, в будущем добавить рефреш токен
+  // экспортируем, чтобы мы могли использовать защиту ендпоинтов от неавторизованных пользователей
+  // JwtModule на всякий мб он нам пригодится
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

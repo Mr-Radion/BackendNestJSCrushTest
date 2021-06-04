@@ -23,10 +23,11 @@ export class UsersService {
   // в параметры сервиса входит DTO объект
   async createUser(dto: CreateUsersDto) {
     const user = await this.userRepository.create(dto);
+    // получаем из бд роль, чтобы присвоить ее юзеру
     const role = await this.roleService.getRoleByValue('USER');
     // метод $set позволяет записать в табл какое-то поле и сразу обновить в бд
     await user.$set('roles', [role.id]);
-    // вручную вписали в тело ответа роль
+    // вручную вписали в тело ответа роль, ибо $set записывает лишь в бд в связанную табл many to many
     user.roles = [role];
     return user;
   }
