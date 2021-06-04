@@ -2,6 +2,8 @@ import { User } from './users/users.model';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path'; // чтобы указать корректный путь к статике
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
@@ -38,6 +40,9 @@ import { FilesModule } from './files/files.module';
       models: [User, Role, UserRoles, Post],
       // флаг чтобы SequelizeModule создавал таблицы в бд, на основании моделей, которые мы будем создавать
       autoLoadModels: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     UsersModule,
     RolesModule,
