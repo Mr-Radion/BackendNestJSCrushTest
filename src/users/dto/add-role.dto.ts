@@ -1,4 +1,4 @@
-import { IsString, Length, IsNumber } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 
 export class AddRoleDto {
   @IsString({ message: 'Должно быть строкой' })

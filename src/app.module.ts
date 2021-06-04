@@ -5,8 +5,11 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
+import { Post } from './posts/posts.model';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   // чтобы контроллер заработал его надо зарегистрировать в этом модуле, массив поскольку контроллеров может быть несколько
@@ -32,13 +35,15 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.POSTGRESS_PASSWORD,
       database: process.env.POSTGRES_DB,
       // регистрируем в бд модели
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, Post],
       // флаг чтобы SequelizeModule создавал таблицы в бд, на основании моделей, которые мы будем создавать
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
+    PostsModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
